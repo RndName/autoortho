@@ -32,10 +32,10 @@ def run(root, mountpoint, threading=True):
 
     if platform.system() == 'Windows':
         systemtype, libpath = winsetup.find_win_libs()
+        os.environ['FUSE_LIBRARY_PATH'] = libpath
         if systemtype == "dokan-FUSE":
             # Windows user mode FS support is kind of a mess, so try a few things.
             log.info("Running in Windows FUSE mode with Dokan.")
-            os.environ['FUSE_LIBRARY_PATH'] = libpath
             root = os.path.expanduser(root)
             mountpoint = os.path.expanduser(mountpoint)
             winsetup.setup_dokan_mount(mountpoint) 
